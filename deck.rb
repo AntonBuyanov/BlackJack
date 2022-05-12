@@ -1,6 +1,7 @@
 require_relative 'card'
 
 class Deck
+  attr_accessor :deck
 
   NUMBERS = (2..10).freeze
   RANKS = %w[валет дама король туз].freeze
@@ -8,6 +9,13 @@ class Deck
 
   def initialize
     create_deck
+  end
+
+  def take_card(player)
+    @deck.shuffle!
+    card = @deck[0]
+    player.cart << card
+    @deck.delete_at(0)
   end
 
   def next_card
@@ -32,5 +40,3 @@ class Deck
     end
   end
 end
-
-p deck1 = Deck.new
