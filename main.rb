@@ -4,6 +4,6 @@ require_relative 'player'
 require_relative 'interface'
 
 menu = BlackJack.new
-menu.menu
+menu.start
 
 

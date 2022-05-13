@@ -1,5 +1,3 @@
-require_relative 'card'
-
 class Deck
   attr_accessor :deck
 
@@ -28,13 +26,13 @@ class Deck
     @deck = []
     SUITS.each do |suit|
       NUMBERS.each do |value|
-        card = Card.new("#{value}#{suit}", value)
+        card = Card.new("#{value}", "#{suit}", value)
         @deck << card
       end
     end
     SUITS.each do |suit|
       RANKS.each do |symbol|
-        card = Card.new("#{symbol}#{suit}", 10)
+        card = Card.new("#{symbol}", "#{suit}", 10)
         @deck << card
       end
     end
