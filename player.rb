@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Класс Player позволяет создавать экземпляры игроков. На старте у игрока 100 кредитов.
 class Player
   attr_reader :cart
 
@@ -26,6 +29,6 @@ class Player
   end
 
   def each_cart
-    @cart.each{ |n| print n.name, n.suit, " "}
+    @cart.each { |n| print n.name, n.suit, ' ' }
   end
 end

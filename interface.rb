@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Класс BlackJack создает пользовательский текстовый интерфейс игры в блэкджек.
 class BlackJack
   attr_reader :list_players, :list_deck
 
@@ -6,15 +9,21 @@ class BlackJack
     @list_deck = []
   end
 
+  MENU = 'Выберите действие:
+1 - пропустить ход
+2 - добавить карту
+3 - открыть карты
+закрыть - выйти из программы'
+
   def start
-    puts 'Это игра BlackJack. Введите ваше имя'
+    puts 'Сыграем в игру BlackJack? Введите ваше имя'
     name = gets.chomp
     list_players << Player.new(name)
     list_players << Player.new('дилер')
-    menu
+    deal
   end
 
-  def menu
+  def deal
     player = list_players[0]
     dealer = list_players[1]
     list_deck << Deck.new
@@ -27,35 +36,21 @@ class BlackJack
     puts 'Ваши карты: '
     player.each_cart
     puts "\nКоличество очков: #{player.sum_point}"
-    select_action
+    menu
   end
 
-  def select_action
+  def menu
+    menu =
+      { '1' => proc { dealer_move_first }, '2' => proc {
+                                                    player_move_second & ace_point_player & dealer_move_first & ace_point_dealer & determine_the_winner & play_again
+                                                  },
+        '3' => proc { determine_the_winner & play_again } }
     loop do
-      puts 'Выберите действие:
-1 - пропустить ход
-2 - добавить карту
-3 - открыть карты
-закрыть - выйти из программы'
+      puts MENU
       option = gets.chomp
-      case option
-      when '1'
-        dealer_move_first
-      when '2'
-        player_move_second
-        ace_point_player
-        dealer_move_second
-        ace_point_dealer
-        determine_the_winner
-        play_again
-      when '3'
-        determine_the_winner
-        play_again
-      when 'закрыть'
-        break
-      else
-        puts 'Такого варианта нет'
-      end
+      break if option == 'закрыть'
+
+      menu[option].call
     end
   end
 
@@ -124,7 +119,7 @@ class BlackJack
     if option == 'да'
       list_players[0].cart.clear
       list_players[1].cart.clear
-      menu
+      deal
     else
       exit
     end

@@ -1,0 +1,12 @@
+Style/AsciiComments:
+  Enabled: false
+etrics/LineLength:
+  Max: 120
+Metrics/MethodLength:
+  Max: 15
+Metrics/AbcSize:
+  Max: 25
+Metrics/LineLength:
+  Max: 200
+Metrics/ClassLength:
+  Max: 120

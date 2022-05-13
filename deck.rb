@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Класс Deck позволяет создавать экземпляр колоды из 52 карт.
 class Deck
   attr_accessor :deck
 
@@ -26,13 +29,13 @@ class Deck
     @deck = []
     SUITS.each do |suit|
       NUMBERS.each do |value|
-        card = Card.new("#{value}", "#{suit}", value)
+        card = Card.new(value.to_s, suit.to_s, value)
         @deck << card
       end
     end
     SUITS.each do |suit|
       RANKS.each do |symbol|
-        card = Card.new("#{symbol}", "#{suit}", 10)
+        card = Card.new(symbol.to_s, suit.to_s, 10)
         @deck << card
       end
     end
