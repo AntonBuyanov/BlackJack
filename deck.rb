@@ -14,15 +14,7 @@ class Deck
 
   def take_card(player)
     @deck.shuffle!
-    card = @deck[0]
-    player.cart << card
-    @deck.delete_at(0)
-  end
-
-  def next_card
-    @deck.shuffle
-    card = @deck.first
-    @deck.delete(card)
+    player.cart << @deck.pop
   end
 
   def create_deck

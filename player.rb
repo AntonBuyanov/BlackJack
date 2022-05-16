@@ -2,24 +2,27 @@
 
 # Класс Player позволяет создавать экземпляры игроков. На старте у игрока 100 кредитов.
 class Player
-  attr_reader :cart
+  attr_accessor :cart, :credit
+
+  START_CASH = 100
+  BET = 10
 
   def initialize(name)
     @name = name
-    @credit = 100
+    @credit = START_CASH
     @cart = []
   end
 
   def make_a_bet
-    @credit -= 10
+    @credit -= BET
   end
 
   def return_a_bet
-    @credit += 10
+    @credit += BET
   end
 
   def winning_money
-    @credit += 20
+    @credit += BET * 2
   end
 
   def sum_point
