@@ -2,13 +2,14 @@
 
 # Класс Game хранит в себе логику процесса игры.
 class Game
-  attr_reader :player, :dealer, :deck, :winner
+  attr_reader :player, :dealer, :deck, :winner, :option
 
   MAX_POINT = 21
   POINT_DEALER = 17
+  MAX_COUNT_CARD = 3
 
   def create_players(name)
-    @player = User.new(name)
+    @player = Player.new(name)
     @dealer = Dealer.new
   end
 
@@ -27,24 +28,23 @@ class Game
 
   def dealer_first
     if dealer.sum_point >= POINT_DEALER
-      puts 'дилер пропускает, ваш ход'
+      @option = 'miss'
     else
       deck.take_card(dealer)
       ace_point_dealer
-      puts 'дилер взял карту, ваш последний ход'
+      @option = 'last'
     end
   end
 
   def player_move_second
     deck.take_card(player)
-    puts "Выпала карта: #{player.cart.last.name}#{player.cart.last.suit}"
   end
 
   def dealer_move_second
-    if dealer.cart.size == 3 || dealer.sum_point >= POINT_DEALER
-      puts 'дилер пропускает ход, вскрываем карты'
+    if dealer.cart.size == MAX_COUNT_CARD || dealer.sum_point >= POINT_DEALER
+      @option = 'last_miss'
     else
-      puts 'дилер берет карту'
+      @option = 'take'
       deck.take_card(dealer)
     end
   end

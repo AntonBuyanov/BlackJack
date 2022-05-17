@@ -26,7 +26,7 @@ class Interface
     puts "Сделана ставка. Осталось кредитов: #{game.player.credit}"
     game.deal
     puts 'Ваши карты: '
-    game.player.each_cart
+    game.player.cart.each { |n| print n.name, n.suit, ' ' }
     puts "\nКоличество очков: #{game.player.sum_point}"
     menu
   end
@@ -44,13 +44,13 @@ class Interface
   end
 
   def option_first
-    game.dealer_first
+    dealer_first
   end
 
   def option_second
-    game.player_move_second
+    player_move_second
     game.ace_point_player
-    game.dealer_move_second
+    dealer_second
     game.ace_point_dealer
     determine_the_winner
     play_again
@@ -59,6 +59,11 @@ class Interface
   def option_third
     determine_the_winner
     play_again
+  end
+
+  def player_move_second
+    game.player_move_second
+    puts "Выпала карта: #{game.player.cart.last.name}#{game.player.cart.last.suit}"
   end
 
   def determine_the_winner
@@ -74,11 +79,31 @@ class Interface
     opening_card
   end
 
+  def dealer_first
+    game.dealer_first
+    case game.option
+    when 'miss'
+      puts 'дилер пропускает, ваш ход'
+    else
+      puts 'дилер взял карту, ваш последний ход'
+    end
+  end
+
+  def dealer_second
+    game.dealer_move_second
+    case game.option
+    when 'last_miss'
+      puts 'дилер пропускает ход, вскрываем карты'
+    else
+      puts 'дилер берет карту'
+    end
+  end
+
   def opening_card
     puts 'Ваши карты: '
-    game.player.each_cart
+    game.player.cart.each { |n| print n.name, n.suit, ' ' }
     puts "\nКарты дилера: "
-    game.dealer.each_cart
+    game.dealer.cart.each { |n| print n.name, n.suit, ' ' }
     puts " \nУ вас очков: #{game.player.sum_point}, у дилера: #{game.dealer.sum_point}"
   end
 
